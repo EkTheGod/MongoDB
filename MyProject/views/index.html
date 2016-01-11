@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<Head><font size="6">Book Store</font></Head>
+<body>
+    <table id="myTable" border="1" style="width:30%" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.js">
+    <tbody> 
+       <tr>
+            <td>Book_ID</td>
+            <td>Book_Name</td>
+            <td>Date</td>
+        </tr>
+        <script language="JavaScript" type="text/javascript" >
+            
+            var body='<tr><td>Book_ID</td><td>Book_Name</td><td>Date</td></tr>';
+            for (var i = 0; i < 9; i++) 
+                body += '<tr><td>'+i+'</td><td>'+i+'</td><td>'+i+'</td></tr>';
+            });
+            document.getElementById("myTable").innerHTML = body ;
+
+            /*$.ajax({
+                url: 'http://localhost:5555/',
+                type: 'POST',
+                data: {
+                    articles: articles
+                },
+                success: function (response) {
+                    var trHTML = '';
+                    $.each(response, function (i, item) {
+                        trHTML += '<tr><td>' + item[i].Book_ID + '</td><td>' + item[i].Book_Name + '</td><td>' + item[i].Date + '</td></tr>';
+                    });
+                    $('#myTable').append(trHTML);
+                }
+            });*/
+
+        </script>
+
+    </tbody>   
+    </table>
+</body>
+</html>

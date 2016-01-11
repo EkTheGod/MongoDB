@@ -1,0 +1,14 @@
+h1 Book Store
+ 
+table(border='1')
+    thead
+        tr
+            th Book_ID
+            th Book_Name
+            th Date
+    tbody
+        each test, i in articles
+            tr
+                td= test.code
+                td= test.name
+                td= test.description

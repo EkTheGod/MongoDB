@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		   $.getJSON('my.js',function(result){
+			  $.each(result, function(key, val) {
+				   $("#result").append( key + '=' + val.Book_ID + val.Book_Name + val.Date +'<br />');
+			  });
+			  console.log(result);
+			});
+	});
+</script>
+
+<body>
+<span id="result"></span>
+</body>
+</html>

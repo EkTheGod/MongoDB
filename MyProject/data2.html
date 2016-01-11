@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<Head><font size="6" id="e">Book Store</font>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript">
+            
+    
+            /*
+            for (var i = 0; i < 9; i++) 
+                body += '<tr><td>'+i+'</td><td>'+i+'</td><td>'+i+'</td></tr>';
+            */
+
+            /*$.ajax({
+                url: url,
+                data: data,
+                success: success,
+                dataType: dataType
+            });*/
+
+             $.ajax({
+                    url: 'http://localhost:5555/data',
+                    type: 'GET',
+                    data: 'articles',
+                    success: function(data) {
+                        document.getElementById("e").innerHTML = data;
+                    }
+            });
+
+            
+
+            /*function () {
+                Handlebars.registerHelper('each', function(context, options) {
+                    var ret = "";
+
+                    for(var i=0, j=context.length; i<j; i++) {
+                        ret = ret + options.fn(context[i].Book_ID);
+                }
+            });
+            }*/
+            
+
+            
+            /*
+                $.get('http://localhost:5555/data', {}, function(data){
+                    console.log(data);
+                });
+                document.getElementById("demo").innerHTML = data;
+            }           
+            
+            /*var t;
+            $.get('http://localhost:5555/data', {}, function(data){
+                console.log(data);
+                //t = data;
+            });
+
+            
+                success: function (response) {
+                    var trHTML = '<tr><td>Book_ID</td><td>Book_Name</td><td>Date</td></tr>';
+                    $.each(response, function (i, item) {
+                        trHTML += '<tr><td>' + item.Book_I + '</td><td>' + item.Book_Name + '</td><td>' + item.Date + '</td></tr>';
+                    });
+                    //$('#myTable').append(trHTML);
+                }
+            });*/
+            //document.getElementById("myTable").innerHTML = body;
+        </script>
+
+
+</Head>
+<body>
+    <table id="myTable" style="width:100%">
+    </table>
+    <span id="result"></span>
+</body>
+</html>

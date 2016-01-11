@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<Head><font size="6">Book Store</font>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+
+<script type="text/javascript">
+
+       window.onload = function() {
+            
+            var body ='<tr><td>Book_ID</td><td>Book_Name</td><td>Date</td></tr>';
+
+            $(document).ready(function(){
+                $.getJSON('data',function(result){
+                    $.each(result, function(key, val) {
+                        body += '<tr><td>' + val.Book_ID +'</td><td>'+ val.Book_Name +'</td><td>'+ val.Date +'</td></tr>';
+                    });
+                    $("#myTable").append(body);
+                });
+            });
+        }
+        </script>
+
+</Head>
+<body>
+
+    <div id="contact">
+    <h1>Insert Data</h1>
+    <form action="http://localhost:5555/myaction" method="post">
+        <fieldset>
+            
+            <label for="Book_ID">Book_ID:</label>
+            <input      type="text"     id="Book_ID"        name="Book_ID"      placeholder="Enter Book ID" />
+
+            <label for="Book_Name">Book_Name:</label>
+            <input      type="text"     id="Book_Name"      name="Book_Name"    placeholder="Enter Book Name" />
+
+            <label for="Date">Date:</label>
+            <input      type="text"     id="Date"           name="Date"         placeholder="Enter Date">
+            
+
+            <input type="submit" value="Insert" /></input>
+
+        </fieldset>
+    </form>
+    </div>
+
+
+
+    <table id="myTable" border="1" style="width:30%">
+    </table>
+</body>
+</html>

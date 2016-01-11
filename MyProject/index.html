@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<Head><font size="6">Book Store</font>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+
+<script type="text/javascript">
+
+       window.onload = function() {
+            
+            var body ='<tr><td>Book_ID</td><td>Book_Name</td><td>Date</td></tr>';
+
+            $(document).ready(function(){
+                $.getJSON('data',function(result){
+                    $.each(result, function(key, val) {
+                        //$("#myTable").append( '<tr><td>' + val.Book_ID +'</td><td>'+ val.Book_Name +'</td><td>'+ val.Date +'</td></tr>');
+                        body += '<tr><td>' + val.Book_ID +'</td><td>'+ val.Book_Name +'</td><td>'+ val.Date +'</td></tr>';
+                    });
+                    $("#myTable").append(body);
+                });
+            });
+        }
+        </script>
+
+</Head>
+<body>
+    <table id="myTable" border="1" style="width:30%">
+    </table>
+</body>
+</html>
