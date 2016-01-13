@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Book Store Pagination</title>
+<h1 align="center">Book Store</h1>
+
+<style type="text/css">
+    div.pager span {
+        display: inline-block;
+        width: 1.8em;
+        height: 1.8em;
+        line-height: 1.8;
+        text-align: center;
+        cursor: pointer;
+        background: #000;
+        color: #fff;
+        margin-right: 0.5em;
+    }
+
+    div.pager span.active {
+        background: #006666;
+}
+
+</style>
+
+
+<script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function(){
+
+        var body = '<tbody>';
+        $.getJSON('data',function(result){
+            $.each(result, function(key, val) {
+                body += '<tr><td align="center">' + val.Book_ID +'</td><td align="center">'+ val.Book_Name +'</td><td align="center">'+ val.Date +'</td></tr>';
+            });
+            body += '</tbody>';
+
+            $("#myTable").append(body);
+
+            $('table.myTable').each(function() { //เรียก class
+                var currentPage = 0;
+                var DataPerPage = 3;
+                var $table = $(this);
+
+                $table.bind('reTable', function() {
+                    $table.find('tbody tr').hide().slice(currentPage * DataPerPage, (currentPage + 1) * DataPerPage).show();
+                });
+                //ซ่อนทั้งหมดก่อน ดึงเอาเฉพาะที่ต้องการแสดงมาดู
+
+                $table.trigger('reTable');
+                var Totalrows = $table.find('tbody tr').length;
+                var NumberOfPages = Math.ceil(Totalrows / DataPerPage); //ปัดทศนิยมขึ้น
+                var $pager = $('<div class="pager" align="center" ></div>');
+
+                for (var page = 0; page < NumberOfPages; page++) {
+                    $('<span class="page-number" ></span>').text(page + 1).bind('click', {
+                        Page: page
+                    }, function(event) {
+                        currentPage = event.data['Page'];
+                        $table.trigger('reTable');
+                        $(this).addClass('active').siblings().removeClass('active');
+                    }).appendTo($pager).addClass('clickable');
+                }
+                $pager.insertAfter($table).find('span.page-number:first').addClass('active');
+            });//end table.myTable
+
+        });//end getJson
+    
+    });//end document.ready
+
+</script>
+</head>
+<body>
+
+<table class="myTable" id="myTable" border="1" style="width:30%" align="center">
+    <thead>
+        <tr>
+            <th>Book_ID</th>
+            <th>Book_Name</th>  
+            <th>Date</th> 
+        </tr>
+    </thead>
+</table>
+
+</body>
+</html>

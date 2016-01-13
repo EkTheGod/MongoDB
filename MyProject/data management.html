@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<Head><font size="6">Book Store</font>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+            $(document).ready(function(){
+
+                    $('#insert').on('submit', function(e) {
+                        var id = document.getElementById("Book_ID");\
+                        alert(id);
+
+                        $.ajax('insert', {
+                            method: "POST",
+                            dataType: "json",
+                            success: function (result, textStatus, jqXHR) {
+                                alert(result);
+                            }
+                        });
+                        e.preventDefault();\
+                        location.reload();
+                    });
+                        /*
+                        $.ajax({
+                            url: "/insert",
+                            type: "POST",
+                            dataType: "json",
+                            success: function (data) {
+                                alert(data);
+                            },
+                            error: function (jXHR, textStatus, errorThrown) {
+                                alert(errorThrown);
+                            }
+                        });
+                        */
+                    
+                
+
+                /*
+                $(document).ready(function(){
+                        $.ajax('data',{ 
+                            method: "POST",
+                            dataType: "json",
+                            success: function (data, textStatus, jqXHR) { 
+                                alert(data);
+                            }
+                        });
+
+
+                        var id = document.getElementById();
+                        $.getJSON('/',function(result){
+                            alert(result);
+                        });
+                });*/
+            });
+</script>
+
+</Head>
+<body>
+
+    <div id="contact">
+    
+    <form id="insert" action="http://localhost:5555/insert" method="post">
+        <h3>Insert Data</h3>
+        <fieldset>
+            
+            <label for="Book_ID">Book_ID:</label>
+            <input      type="text"     id="Book_ID"        name="Book_ID"      placeholder="Enter Book ID" />
+
+            <label for="Book_Name">Book_Name:</label>
+            <input      type="text"     id="Book_Name"      name="Book_Name"    placeholder="Enter Book Name" />
+
+            <label for="Date">Date:</label>
+            <input      type="text"     id="Date"           name="Date"         placeholder="Enter Date">
+            
+            <input type="submit" value="Insert"  onClick="history.go(0)" VALUE="Refresh"></input>
+
+        </fieldset>
+    </form>
+    </div>
+
+    <form id="remove" action="http://localhost:5555/remove"  method="post">
+        <h3>Delete Data</h3>
+        <fieldset>
+            
+            <label for="Book_ID">Book_ID:</label>
+            <input      type="text"     id="Book_ID_r"        name="Book_ID_r"      placeholder="Enter Book ID" />
+
+            <label for="Book_Name">Book_Name:</label>
+            <input      type="text"     id="Book_Name_r"      name="Book_Name_r"    placeholder="Enter Book Name" />
+
+            <label for="Date">Date:</label>
+            <input      type="text"     id="Date_r"           name="Date_r"         placeholder="Enter Date">
+            
+            <input type="submit" value="Delete" /></input>
+
+        </fieldset>
+    </form>
+    </div>
+
+    <form id="update" action="http://localhost:5555/update" method="post">
+        <h3>Update Data</h3>
+        <fieldset>
+            
+            <label for="Book_ID">Book_ID:</label>
+            <input      type="text"     id="Book_ID"        name="Book_ID_u"      placeholder="Enter Book ID" />
+
+            <label for="Book_Name">Book_Name:</label>
+            <input      type="text"     id="Book_Name"      name="Book_Name_u"    placeholder="Enter Book Name" />
+
+            <label for="Date">Date:</label>
+            <input      type="text"     id="Date"           name="Date_u"         placeholder="Enter Date">
+            
+            <input type="submit" value="Update" /></input>
+
+        </fieldset>
+    </form>
+    </div>
+
+    </table>
+</body>
+</html>

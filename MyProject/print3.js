@@ -6,10 +6,8 @@ var bodyParser = require('body-parser');
 var express = require('express');
 var path = require('path');
 var app = express();
+var assert = require('assert');
 
-
-var fs = require('fs');
-var outputFilename = '/Dev/MyProject/my.js';
 var collection;
 var mydata;
 
@@ -34,12 +32,40 @@ app.get('/data', function ( req, res) {
   });
 
 app.get('/', function ( req, res) {
-    res.sendFile(path.join(__dirname, 'data.html'));
+    res.sendFile(path.join(__dirname, 'data management.html'));
   });
 
-app.post('/myaction', function (req, res) {
-  res.send('You sent the name "' + req.body.Book_ID + '".'+'"'+ req.body.Book_Name + '"' +'"'+req.body.Date+'"');
+
+app.post('/insert', function (req, res) {
+
+  var id = req.body.Book_ID;
+  var name = req.body.Book_Name;
+
+  if(req.body.Book_ID != "" && req.body.Book_Name != "" && req.body.Date != "")
+  {   collection.findOne( { Book_ID : req.body.Book_ID } , function(err ,find){
+        if( find == null || id != find.Book_ID || name != find.Book_Name )
+        {   collection.insert({Book_ID:req.body.Book_ID , Book_Name:req.body.Book_Name, Date:req.body.Date });
+            res.send('Success');
+        }
+        else
+        {   res.send('Allready Have It');
+        }
+      });
+  }
+  else if(req.body.Book_ID == "" || req.body.Book_Name == "" || req.body.Date == "")
+        {   res.send('You did not Enter All');  }
+
+  res.sendFile(path.join(__dirname, 'data management.html'));    
+});
+
+
+
+
+
+
+app.post('/remove', function (req, res) {
   collection.insert({Book_ID:req.body.Book_ID , Book_Name:req.body.Book_Name, Date:req.body.Date });
+  res.send("1");
   console.log('Insert Success');
 });
  
