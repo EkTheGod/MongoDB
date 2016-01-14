@@ -15,6 +15,7 @@
         background: #000;
         color: #fff;
         margin-right: 0.5em;
+        margin-top: 1em;
     }
 
     div.pager span.active {
@@ -34,21 +35,21 @@
             $.each(result, function(key, val) {
                 body += '<tr><td align="center">' + val.Book_ID +'</td><td align="center">'+ val.Book_Name +'</td><td align="center">'+ val.Date +'</td></tr>';
             });
-            body += '</tbody>';
 
+            body += '</tbody>';
             $("#myTable").append(body);
 
             $('table.myTable').each(function() { //เรียก class
                 var currentPage = 0;
-                var DataPerPage = 3;
+                var DataPerPage = 5;
                 var $table = $(this);
 
-                $table.bind('reTable', function() {
+                $table.bind('createPaging', function() {
                     $table.find('tbody tr').hide().slice(currentPage * DataPerPage, (currentPage + 1) * DataPerPage).show();
                 });
                 //ซ่อนทั้งหมดก่อน ดึงเอาเฉพาะที่ต้องการแสดงมาดู
 
-                $table.trigger('reTable');
+                $table.trigger('createPaging');
                 var Totalrows = $table.find('tbody tr').length;
                 var NumberOfPages = Math.ceil(Totalrows / DataPerPage); //ปัดทศนิยมขึ้น
                 var $pager = $('<div class="pager" align="center" ></div>');
@@ -58,7 +59,7 @@
                         Page: page
                     }, function(event) {
                         currentPage = event.data['Page'];
-                        $table.trigger('reTable');
+                        $table.trigger('createPaging');
                         $(this).addClass('active').siblings().removeClass('active');
                     }).appendTo($pager).addClass('clickable');
                 }

@@ -8,14 +8,25 @@
             $(document).ready(function(){
 
                     $('#insert').on('submit', function(e) {
-                        var id = document.getElementById("Book_ID");\
-                        alert(id);
 
                         $.ajax('insert', {
                             method: "POST",
                             dataType: "json",
                             success: function (result, textStatus, jqXHR) {
-                                alert(result);
+                                console.log(result);
+                            }
+                        });
+                        e.preventDefault();\
+                        location.reload();
+                    });
+
+                    $('#remove').on('submit', function(e) {
+
+                        $.ajax('remove', {
+                            method: "POST",
+                            dataType: "json",
+                            success: function (result, textStatus, jqXHR) {
+                                console.log(result);
                             }
                         });
                         e.preventDefault();\
@@ -80,8 +91,12 @@
     </form>
     </div>
 
+
+
+
+
     <form id="remove" action="http://localhost:5555/remove"  method="post">
-        <h3>Delete Data</h3>
+        <h3>Remove Data</h3>
         <fieldset>
             
             <label for="Book_ID">Book_ID:</label>
@@ -93,28 +108,45 @@
             <label for="Date">Date:</label>
             <input      type="text"     id="Date_r"           name="Date_r"         placeholder="Enter Date">
             
-            <input type="submit" value="Delete" /></input>
+            <input type="submit" value="remove" onClick="history.go(0)" VALUE="Refresh"></input>
 
         </fieldset>
     </form>
     </div>
 
+
+
+
+
     <form id="update" action="http://localhost:5555/update" method="post">
         <h3>Update Data</h3>
         <fieldset>
             
-            <label for="Book_ID">Book_ID:</label>
-            <input      type="text"     id="Book_ID"        name="Book_ID_u"      placeholder="Enter Book ID" />
+        <label for="Book_ID">Book_ID:</label>
+        <input      type="text"     id="Book_ID_u"        name="Book_ID_u"      placeholder="Enter Book ID" />
 
-            <label for="Book_Name">Book_Name:</label>
-            <input      type="text"     id="Book_Name"      name="Book_Name_u"    placeholder="Enter Book Name" />
+        <label for="Book_Name">Book_Name:</label>
+        <input      type="text"     id="Book_Name_u"      name="Book_Name_u"    placeholder="Enter Book Name" />
 
-            <label for="Date">Date:</label>
-            <input      type="text"     id="Date"           name="Date_u"         placeholder="Enter Date">
-            
-            <input type="submit" value="Update" /></input>
+        <label for="Date">Date:</label>
+        <input      type="text"     id="Date_u"           name="Date_u"         placeholder="Enter Date">
+        </fieldset>
+        
+        <fieldset>
+
+        <label for="Book_ID">New Book_ID:</label>
+        <input      type="text"     id="New_Book_ID"        name="New_Book_ID"      placeholder="Enter New Book ID" />
+
+        <label for="Book_Name">New Book_Name:</label>
+        <input      type="text"     id="New_Book_Name"      name="New_Book_Name"    placeholder="Enter New Book Name" />
+
+        <label for="Date">New Date:</label>
+        <input      type="text"     id="New_Date"           name="New_Date"         placeholder="Enter New Date">
 
         </fieldset>
+            
+        <input type="submit" value="update" onClick="history.go(0)" VALUE="Refresh"></input>
+
     </form>
     </div>
 
