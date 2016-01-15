@@ -1,78 +1,94 @@
 <!DOCTYPE html>
 <html>
 <Head><font size="6">Book Store</font>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 <script type="text/javascript">
 
-            $(document).ready(function(){
+                $(document).ready(function(){
+
+
+                    $('#new').hide(); 
+                    $('#remove').hide("fast");
 
                     $('#insert').on('submit', function(e) {
 
-                        $.ajax('insert', {
-                            method: "POST",
-                            dataType: "json",
-                            success: function (result, textStatus, jqXHR) {
-                                console.log(result);
+
+                        $.get('data', function(result){
+
+                            var check=0;
+                            if($("#Book_ID").val() != "" && $("#Book_Name").val() != "" && $("#Date").val() != "" )
+                            {   
+                                $.each(result, function(key, val) {
+                                    if(val.Book_ID == $("#Book_ID").val() || val.Book_Name == $("#Book_Name").val())
+                                        check++;   
+                                });
+                                if(check>0)
+                                    alert("You already have it");                                           
+                                else        
+                                    alert("Insert Success");
                             }
+                            else
+                                alert("You not enter all");
+                            
                         });
-                        e.preventDefault();\
-                        location.reload();
-                    });
+                    });//end insert   
 
                     $('#remove').on('submit', function(e) {
-
-                        $.ajax('remove', {
-                            method: "POST",
-                            dataType: "json",
-                            success: function (result, textStatus, jqXHR) {
-                                console.log(result);
+                        $.get('data', function(result){
+                            var check=0;
+                            if($("#Book_ID_r").val() != "" && $("#Book_Name_r").val() != "" && $("#Date_r").val() != "" )
+                            {   
+                                $.each(result, function(key, val) {
+                                    if(val.Book_ID == $("#Book_ID_r").val() && val.Book_Name == $("#Book_Name_r").val())
+                                        check++;          
+                                });
+                                if(check>0)
+                                    alert("Remove Success");                                          
+                                else 
+                                    alert("Not found in DataBase");            
                             }
+                            else
+                                alert("You not enter all");
                         });
-                        e.preventDefault();\
-                        location.reload();
-                    });
-                        /*
-                        $.ajax({
-                            url: "/insert",
-                            type: "POST",
-                            dataType: "json",
-                            success: function (data) {
-                                alert(data);
-                            },
-                            error: function (jXHR, textStatus, errorThrown) {
-                                alert(errorThrown);
+                    });//end remove 
+
+                    $('#finddata').on('submit' , function(e) {
+
+                        $('.found').hide("fast");
+
+/*
+                        $.get('data', function(result){
+                            var check=0;
+
+                            if($("#Book_ID_u").val() != "" && $("#Book_Name_u").val() != "" && $("#Date_u").val() != "" )
+                            {   
+                                $.each(result, function(key, val) {
+                                    if(val.Book_ID == $("#Book_ID_u").val() && val.Book_Name == $("#Book_Name_u").val())
+                                        check++;           
+                                });
+                                if(check>0)
+                                    alert("Found! Book_ID : "+val.Book_ID+" Book_Name : "+val.Book_Name+" Date : "+val.Date);
+                                else 
+                                    alert("Not found in DataBase"); 
                             }
+                            else
+                                alert("You not enter all");
                         });
-                        */
-                    
-                
-
-                /*
-                $(document).ready(function(){
-                        $.ajax('data',{ 
-                            method: "POST",
-                            dataType: "json",
-                            success: function (data, textStatus, jqXHR) { 
-                                alert(data);
-                            }
+*/
+                                
                         });
 
-
-                        var id = document.getElementById();
-                        $.getJSON('/',function(result){
-                            alert(result);
-                        });
-                });*/
-            });
+                });//end ready
 </script>
 
 </Head>
 <body>
 
-    <div id="contact">
+   
     
-    <form id="insert" action="http://localhost:5555/insert" method="post">
+    <form id="insert" action="http://localhost:5556/insert" method="post">
         <h3>Insert Data</h3>
         <fieldset>
             
@@ -85,17 +101,16 @@
             <label for="Date">Date:</label>
             <input      type="text"     id="Date"           name="Date"         placeholder="Enter Date">
             
-            <input type="submit" value="Insert"  onClick="history.go(0)" VALUE="Refresh"></input>
+            <input type="submit" value="Insert"  ></input>
 
         </fieldset>
     </form>
-    </div>
 
 
 
 
 
-    <form id="remove" action="http://localhost:5555/remove"  method="post">
+    <form id="remove" action="http://localhost:5556/remove"  method="post">
         <h3>Remove Data</h3>
         <fieldset>
             
@@ -108,18 +123,22 @@
             <label for="Date">Date:</label>
             <input      type="text"     id="Date_r"           name="Date_r"         placeholder="Enter Date">
             
-            <input type="submit" value="remove" onClick="history.go(0)" VALUE="Refresh"></input>
+            <input type="submit" value="Remove" onClick="history.go(0)" VALUE="Refresh"></input>
 
         </fieldset>
     </form>
-    </div>
 
 
 
 
+    
 
-    <form id="update" action="http://localhost:5555/update" method="post">
         <h3>Update Data</h3>
+
+        
+        <form id="finddata"> 
+
+              
         <fieldset>
             
         <label for="Book_ID">Book_ID:</label>
@@ -130,10 +149,35 @@
 
         <label for="Date">Date:</label>
         <input      type="text"     id="Date_u"           name="Date_u"         placeholder="Enter Date">
-        </fieldset>
-        
-        <fieldset>
 
+        <input type="submit" value="Find" ></input>
+
+        </fieldset>
+
+        <div>  
+        <fieldset id="found" class="found" style="element.style.display = 'none' ">
+            
+        <label id="Book_ID_f">Book_ID:</label>
+
+        <label id="Book_Name_f">Book_Name:</label>
+
+        <label id="Date_f">Date:</label>
+
+        </fieldset>
+
+        </div>
+        </form>
+
+
+
+
+
+
+        <form id="update" action="http://localhost:5556/update" method="post">    
+        
+
+    <div id="new">
+        <fieldset >
         <label for="Book_ID">New Book_ID:</label>
         <input      type="text"     id="New_Book_ID"        name="New_Book_ID"      placeholder="Enter New Book ID" />
 
@@ -142,13 +186,12 @@
 
         <label for="Date">New Date:</label>
         <input      type="text"     id="New_Date"           name="New_Date"         placeholder="Enter New Date">
-
-        </fieldset>
-            
+        
         <input type="submit" value="update" onClick="history.go(0)" VALUE="Refresh"></input>
-
-    </form>
+        </fieldset>
     </div>
+        
+        </form>
 
     </table>
 </body>

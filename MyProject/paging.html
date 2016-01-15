@@ -30,6 +30,51 @@
 
     $(document).ready(function(){
 
+        $.ajax({ 
+            url: '/senddata',
+            type: 'POST', 
+            data: {
+                    'paramater1' : 'value'
+            },
+            success: function (result) { 
+                alert(result);
+    } 
+});
+
+
+
+
+
+
+        /*
+
+        var Totalrows;
+        var currentPage;
+        var DataPerPage = 5;
+        var NumberOfPages;
+
+        $.getJSON('/datacount',function(result){
+                Totalrows = result;
+                currentPage = 0;
+                DataPerPage = 5;
+                NumberOfPages = Math.ceil(Totalrows / DataPerPage);
+
+                $.ajax({
+                    url: '/data',
+                    type: post,
+                    data:DataPerPage
+                });
+
+            });
+        */
+
+       
+
+
+
+
+        /*
+
         var body = '<tbody>';
         $.getJSON('data',function(result){
             $.each(result, function(key, val) {
@@ -67,6 +112,7 @@
             });//end table.myTable
 
         });//end getJson
+        */
     
     });//end document.ready
 
