@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <title>Book Store Pagination</title>
 <h1 align="center">Book Store</h1>
 
@@ -31,88 +32,65 @@
     $(document).ready(function(){
 
         $.ajax({ 
-            url: '/senddata',
-            type: 'POST', 
-            data: {
-                    'paramater1' : 'value'
-            },
+            url: '/datacount',
+            type: 'GET',
             success: function (result) { 
-                alert(result);
-    } 
-});
-
-
-
-
-
-
-        /*
-
-        var Totalrows;
-        var currentPage;
-        var DataPerPage = 5;
-        var NumberOfPages;
-
-        $.getJSON('/datacount',function(result){
-                Totalrows = result;
-                currentPage = 0;
-                DataPerPage = 5;
-                NumberOfPages = Math.ceil(Totalrows / DataPerPage);
-
-                $.ajax({
-                    url: '/data',
-                    type: post,
-                    data:DataPerPage
-                });
-
-            });
-        */
-
-       
-
-
-
-
-        /*
-
-        var body = '<tbody>';
-        $.getJSON('data',function(result){
-            $.each(result, function(key, val) {
-                body += '<tr><td align="center">' + val.Book_ID +'</td><td align="center">'+ val.Book_Name +'</td><td align="center">'+ val.Date +'</td></tr>';
-            });
-
-            body += '</tbody>';
-            $("#myTable").append(body);
-
-            $('table.myTable').each(function() { //เรียก class
+                var record = result;
                 var currentPage = 0;
                 var DataPerPage = 5;
-                var $table = $(this);
+                var NumberOfPages  = Math.ceil( record / DataPerPage);
+                var body ;
 
-                $table.bind('createPaging', function() {
-                    $table.find('tbody tr').hide().slice(currentPage * DataPerPage, (currentPage + 1) * DataPerPage).show();
-                });
-                //ซ่อนทั้งหมดก่อน ดึงเอาเฉพาะที่ต้องการแสดงมาดู
+                getdata( DataPerPage , currentPage );
 
-                $table.trigger('createPaging');
-                var Totalrows = $table.find('tbody tr').length;
-                var NumberOfPages = Math.ceil(Totalrows / DataPerPage); //ปัดทศนิยมขึ้น
-                var $pager = $('<div class="pager" align="center" ></div>');
+                        $('table.myTable').each(function() { //เรียก class
+                        
+                        var $table = $(this);
 
-                for (var page = 0; page < NumberOfPages; page++) {
-                    $('<span class="page-number" ></span>').text(page + 1).bind('click', {
-                        Page: page
-                    }, function(event) {
-                        currentPage = event.data['Page'];
+
                         $table.trigger('createPaging');
-                        $(this).addClass('active').siblings().removeClass('active');
-                    }).appendTo($pager).addClass('clickable');
-                }
-                $pager.insertAfter($table).find('span.page-number:first').addClass('active');
-            });//end table.myTable
+                        var $pager = $('<div class="pager" align="center" ></div>');
 
-        });//end getJson
-        */
+                        for (var page = 0; page < NumberOfPages; page++) {
+                            $('<span class="page-number" ></span>').text(page + 1).bind('click', {
+                                Page: page
+                            }, function(event) {
+                                currentPage = event.data['Page'];
+                                getdata( DataPerPage , currentPage );
+                                $table.trigger('createPaging');
+                                $(this).addClass('active').siblings().removeClass('active');
+                            }).appendTo($pager).addClass('clickable');
+                        }
+                        $pager.insertAfter($table).find('span.page-number:first').addClass('active');
+                        });//end table.myTable
+                        
+  
+            }// datacount success
+        });//end datacount
+
+
+
+
+
+
+    function getdata( DataPerPage,currentPage ){
+        
+            $("#myTable tbody").remove();
+            body = '<tbody>';
+                $.ajax({ 
+                    url: '/senddata',
+                    type: 'GET',
+                    data: { dpp : DataPerPage , cp : currentPage },
+                    success: function (result) {
+                        $.each(result, function(key, val) {
+                            body += '<tr><td align="center" width="100">' + val.Book_ID +'</td><td align="center" width="150">'+ val.Book_Name +'</td><td align="center" width="100">'+ val.Date +'</td></tr>';
+                        }); 
+
+                        body += '</tbody>';
+                        $("#myTable").append(body);   
+                    }//senddata success
+                });//end senddata 
+    }               
     
     });//end document.ready
 

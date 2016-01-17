@@ -9,6 +9,15 @@ var app = express();
 var collection;
 var mydata;
 
+/*
+
+var bodyParser = require('body-parser')
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+})); 
+*/
+
 MongoClient.connect(url, function (err, db, req, res) {
   if (err) {
     console.log('Unable to connect to the mongoDB server. Error:', err);
@@ -28,37 +37,24 @@ app.get('/data', function ( req, res) {
     });
   });
 
-app.post('/senddata', function ( req, res) {
-
+app.get('/senddata', function ( req, res) {
   
 
-  /*
-    var start = 0;
-    var dataperpage = 5;
-    var i=1;
-    var len;
-    collection.find().toArray(function(err, articles) {
-        len = articles.length;
-    });
+  var start = parseInt(req.param('dpp'))*parseInt(req.param('cp')) ;
 
-    while( (i*dataperpage) <=len){
-        collection.find().sort( { Book_ID: 1 } ).skip(start).limit(dataperpage).toArray(function(err, articles){
-            res.send(articles);
-        });
-        start = dataperpage*i - 1;
-
-    }
-    */
+  collection.find().sort( { Book_ID: 1 } ).skip(start).limit( parseInt(req.param('dpp')) ).toArray(function(err, articles){
+      res.send(articles);
+      console.log(start);
+  });
 });
 
-/*
+
 app.get('/datacount', function ( req, res) {
     collection.find().toArray(function(err, articles) {
       var l = articles.length;
       res.json(l);
     });
 });
-*/
 
 app.get('/', function ( req, res) {
     res.sendFile(path.join(__dirname, 'paging.html'));
