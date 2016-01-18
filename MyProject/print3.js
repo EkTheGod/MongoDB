@@ -7,10 +7,6 @@ var express = require('express');
 var path = require('path');
 var app = express();
 
-
-var assert = require('assert');
-var fs = require('fs');
-
 var collection;
 var mydata,status,i;
 
@@ -110,8 +106,8 @@ app.post('/update', function (req, res) {
 
   var id = req.body.Book_ID_u;
   var name = req.body.Book_Name_u;
-  console.log( id+' , '+name );
-  console.log( req.body.New_book_ID+' , '+req.body.New_book_Name+' , '+req.body.New_Date );
+  //console.log( id+' , '+name );
+  //console.log( req.body.New_book_ID+' , '+req.body.New_book_Name+' , '+req.body.New_Date );
   res.sendFile(path.join(__dirname, 'data management.html')); 
 
   /*

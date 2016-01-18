@@ -9,11 +9,7 @@
                 $(document).ready(function(){
 
 
-                    $('#new').hide(); 
-                    $('#remove').hide("fast");
-
                     $('#insert').on('submit', function(e) {
-
 
                         $.get('data', function(result){
 
@@ -54,11 +50,10 @@
                         });
                     });//end remove 
 
-                    $('#finddata').on('submit' , function(e) {
+                   
 
-                        $('.found').hide("fast");
+                   /* $('#update').on('submit', function(e) {
 
-/*
                         $.get('data', function(result){
                             var check=0;
 
@@ -69,16 +64,27 @@
                                         check++;           
                                 });
                                 if(check>0)
-                                    alert("Found! Book_ID : "+val.Book_ID+" Book_Name : "+val.Book_Name+" Date : "+val.Date);
+                                {   alert("Found! Book_ID : "+val.Book_ID+" Book_Name : "+val.Book_Name+" Date : "+val.Date);
+
+                                    $.ajax({ 
+                                        url: '/update',
+                                        type: 'POST',
+                                        data: { 'id' : $("#New_Book_ID").val() , 'name' : $("#New_Book_Name").val() , 'date' : $("#New_Date").val()  },
+                                        success: function (result) {
+                                            alert("Successssss");
+                                        }//ajax success
+                                    });//end ajax
+                                }
                                 else 
                                     alert("Not found in DataBase"); 
                             }
                             else
                                 alert("You not enter all");
                         });
-*/
-                                
-                        });
+
+                    });//end update
+                    */
+
 
                 });//end ready
 </script>
@@ -136,7 +142,7 @@
         <h3>Update Data</h3>
 
         
-        <form id="finddata"> 
+        <form id="update" action="http://localhost:5556/update"  method="post"> 
 
               
         <fieldset>
@@ -153,30 +159,8 @@
         <input type="submit" value="Find" ></input>
 
         </fieldset>
-
-        <div>  
-        <fieldset id="found" class="found" style="element.style.display = 'none' ">
-            
-        <label id="Book_ID_f">Book_ID:</label>
-
-        <label id="Book_Name_f">Book_Name:</label>
-
-        <label id="Date_f">Date:</label>
-
-        </fieldset>
-
-        </div>
         </form>
 
-
-
-
-
-
-        <form id="update" action="http://localhost:5556/update" method="post">    
-        
-
-    <div id="new">
         <fieldset >
         <label for="Book_ID">New Book_ID:</label>
         <input      type="text"     id="New_Book_ID"        name="New_Book_ID"      placeholder="Enter New Book ID" />
@@ -189,7 +173,6 @@
         
         <input type="submit" value="update" onClick="history.go(0)" VALUE="Refresh"></input>
         </fieldset>
-    </div>
         
         </form>
 

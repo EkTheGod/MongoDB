@@ -34,8 +34,9 @@ app.get('/data', function ( req, res) {
 });
 
 app.get('/senddata', function ( req, res) {
-    var start = parseInt(req.param('dpp'))*parseInt(req.param('cp')) ;
-    collection.find().sort( { Book_ID: 1 } ).skip(start).limit( parseInt(req.param('dpp')) ).toArray(function(err, articles){
+    var start = parseInt(req.query.dpp)*parseInt(req.query.cp); // req.param('dpp') or req.param('cp') ก็ได้
+    //console.log('dpp : '+req.query.dpp+' cp : '+req.query.cp); 
+    collection.find().sort( { Book_ID: 1 } ).skip(start).limit( parseInt(req.query.dpp) ).toArray(function(err, articles){
         res.send(articles);
     });
 });

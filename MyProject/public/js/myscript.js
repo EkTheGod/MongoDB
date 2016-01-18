@@ -17,7 +17,7 @@ $.ajax({
             var $pager = $('<div class="pager" align="center" ></div>');
 
             for (var page = 0; page < NumberOfPages; page++) {
-                $('<span class="page-number" ></span>').text(page + 1).bind('click', {
+                $('<span class="page-number"></span>').text(page + 1).bind('click', {
                     Page: page
                 },  function(event) {
                         currentPage = event.data['Page'];
@@ -36,7 +36,7 @@ function getdata( DataPerPage,currentPage ){
     $.ajax({ 
         url: '/senddata',
         type: 'GET',
-        data: { dpp : DataPerPage , cp : currentPage },
+        data: { 'dpp' : DataPerPage , 'cp' : currentPage },
         success: function (result) {
             printdata(result);
         }//senddata success
@@ -47,7 +47,7 @@ function printdata( data ){
     $("#myTable tbody").remove();
     body = '<tbody>';
     $.each(data, function(key, val) {
-        body += '<tr><td align="center" width="100">' + val.Book_ID +'</td><td align="center" width="150">'+ val.Book_Name +'</td><td align="center" width="100">'+ val.Date +'</td></tr>';
+        body += '<tr><td align="center" width="100" title="Book ID is '+val.Book_ID+' ">' + val.Book_ID +'</td><td align="center" width="150" title="Book Name is '+val.Book_Name+'">'+ val.Book_Name +'</td><td align="center" width="100" title="Date is '+val.Date+'">'+ val.Date +'</td></tr>';
     }); 
     body += '</tbody>';
     $("#myTable").append(body);   
