@@ -4,97 +4,10 @@
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <title>Book Store Pagination</title>
 <h1 align="center">Book Store</h1>
+<link rel="stylesheet" type="text/css" href="css/style.css">
 
-<style type="text/css">
-    div.pager span {
-        display: inline-block;
-        width: 1.8em;
-        height: 1.8em;
-        line-height: 1.8;
-        text-align: center;
-        cursor: pointer;
-        background: #000;
-        color: #fff;
-        margin-right: 0.5em;
-        margin-top: 1em;
-    }
-
-    div.pager span.active {
-        background: #006666;
-}
-
-</style>
-
-
-<script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
-<script type="text/javascript">
-
-    $(document).ready(function(){
-
-        $.ajax({ 
-            url: '/datacount',
-            type: 'GET',
-            success: function (result) { 
-                var record = result;
-                var currentPage = 0;
-                var DataPerPage = 5;
-                var NumberOfPages  = Math.ceil( record / DataPerPage);
-                var body ;
-
-                getdata( DataPerPage , currentPage );
-
-                        $('table.myTable').each(function() { //เรียก class
-                        
-                        var $table = $(this);
-
-
-                        $table.trigger('createPaging');
-                        var $pager = $('<div class="pager" align="center" ></div>');
-
-                        for (var page = 0; page < NumberOfPages; page++) {
-                            $('<span class="page-number" ></span>').text(page + 1).bind('click', {
-                                Page: page
-                            }, function(event) {
-                                currentPage = event.data['Page'];
-                                getdata( DataPerPage , currentPage );
-                                $table.trigger('createPaging');
-                                $(this).addClass('active').siblings().removeClass('active');
-                            }).appendTo($pager).addClass('clickable');
-                        }
-                        $pager.insertAfter($table).find('span.page-number:first').addClass('active');
-                        });//end table.myTable
-                        
-  
-            }// datacount success
-        });//end datacount
-
-
-
-
-
-
-    function getdata( DataPerPage,currentPage ){
-        
-            $("#myTable tbody").remove();
-            body = '<tbody>';
-                $.ajax({ 
-                    url: '/senddata',
-                    type: 'GET',
-                    data: { dpp : DataPerPage , cp : currentPage },
-                    success: function (result) {
-                        $.each(result, function(key, val) {
-                            body += '<tr><td align="center" width="100">' + val.Book_ID +'</td><td align="center" width="150">'+ val.Book_Name +'</td><td align="center" width="100">'+ val.Date +'</td></tr>';
-                        }); 
-
-                        body += '</tbody>';
-                        $("#myTable").append(body);   
-                    }//senddata success
-                });//end senddata 
-    }               
-    
-    });//end document.ready
-
-</script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+<script type="text/javascript" src="js/myscript.js"></script>
 </head>
 <body>
 
